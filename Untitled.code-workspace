@@ -1,7 +1,10 @@
 {
-	"folders": [
-		{
-			"path": "ppm-react-app"
-		}
-	]
+    "folders": [
+        {
+            "path": "ppm-react-app"
+        },
+        {
+            "path": "/Users/samuelsegal/git/AgileIntPPMTool/ppmtool-react-client"
+        }
+    ]
 }
