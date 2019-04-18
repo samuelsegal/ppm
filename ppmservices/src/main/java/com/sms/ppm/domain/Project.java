@@ -1,7 +1,12 @@
 package com.sms.ppm.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
+import lombok.ToString;
+import org.hibernate.annotations.LazyToOne;
+import org.hibernate.annotations.LazyToOneOption;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -10,6 +15,7 @@ import java.util.Date;
 
 @Entity
 @Data
+@ToString(exclude = {"backlog"})
 public class Project {
 
     @Id
@@ -33,7 +39,9 @@ public class Project {
     @JsonFormat(pattern = "yyyy-mm-dd")
     private Date updated_At;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "project")
+    @OneToOne(mappedBy = "project", cascade = CascadeType.ALL, fetch=FetchType.LAZY)
+    @LazyToOne(LazyToOneOption.NO_PROXY)
+    @JsonIgnore
     private Backlog backLog;
 
     @PrePersist

@@ -5,10 +5,14 @@ import com.sms.ppm.domain.Project;
 import com.sms.ppm.exceptions.ProjectIdException;
 import com.sms.ppm.repositories.BacklogRepository;
 import com.sms.ppm.repositories.ProjectRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Slf4j
 public class ProjectService {
 
     @Autowired
@@ -30,7 +34,7 @@ public class ProjectService {
             }
             return projectRepository.save(project);
         } catch (Exception e) {
-            throw new ProjectIdException(new StringBuilder("Project ID '").append(identifier).append("' already not exist").toString());
+            throw new ProjectIdException("Project ID '" + "' already not exist");
         }
 
     }
@@ -41,16 +45,22 @@ public class ProjectService {
         Project project = projectRepository.findByProjectIdentifier(projectId.toUpperCase());
 
         if (project == null) {
-            throw new ProjectIdException(new StringBuilder("Project ID '").append(projectId.toUpperCase()).append("' does not exist").toString());
+            throw new ProjectIdException("Project ID '" + "' does not exist");
 
         }
 
 
         return project;
     }
-
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = true, noRollbackFor = Exception.class)
     public Iterable<Project> findAllProjects() {
-        return projectRepository.findAll();
+        Iterable<Project> allProjects = projectRepository.findAll();
+        if(log.isDebugEnabled()){
+            allProjects.forEach(project -> {
+                log.debug("Found project: {}", project);
+            });
+        }
+        return allProjects;
     }
 
 

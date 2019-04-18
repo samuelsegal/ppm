@@ -5,6 +5,7 @@ package com.sms.ppm.web;
 import com.sms.ppm.domain.Project;
 import com.sms.ppm.services.MapValidationErrorService;
 import com.sms.ppm.services.ProjectService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/api/project")
 @CrossOrigin
+@Slf4j
 public class ProjectController {
 
     @Autowired
@@ -47,7 +49,10 @@ public class ProjectController {
 
 
     @GetMapping("/all")
-    public Iterable<Project> getAllProjects(){return projectService.findAllProjects();}
+    public Iterable<Project> getAllProjects(){
+        Iterable<Project> allProjects = projectService.findAllProjects();
+        return projectService.findAllProjects();
+    }
 
 
     @DeleteMapping("/{projectId}")
