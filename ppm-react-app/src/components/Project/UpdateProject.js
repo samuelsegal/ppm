@@ -49,6 +49,7 @@ class UpdateProject extends Component {
 	}
 	render() {
 		const { errors } = this.state;
+
 		return (
 			<div className="project">
 				<div className="container">
