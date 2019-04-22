@@ -13,13 +13,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Slf4j
-public class ProjectService {
+public class ProjectServiceImpl implements com.sms.ppm.services.ProjectService {
 
     @Autowired
     private ProjectRepository projectRepository;
     @Autowired
     private BacklogRepository backlogRepository;
 
+    @Override
     public Project saveOrUpdateProject(Project project) {
         String identifier = project.getProjectIdentifier().toUpperCase();
         try {
@@ -40,6 +41,7 @@ public class ProjectService {
     }
 
 
+    @Override
     public Project findProjectByIdentifier(String projectId) {
 
         Project project = projectRepository.findByProjectIdentifier(projectId.toUpperCase());
@@ -53,6 +55,7 @@ public class ProjectService {
         return project;
     }
 
+    @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true, noRollbackFor = Exception.class)
     public Iterable<Project> findAllProjects() {
         Iterable<Project> allProjects = projectRepository.findAll();
@@ -65,6 +68,7 @@ public class ProjectService {
     }
 
 
+    @Override
     public void deleteProjectByIdentifier(String projectid) {
         Project project = projectRepository.findByProjectIdentifier(projectid.toUpperCase());
 

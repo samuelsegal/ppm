@@ -3,8 +3,8 @@ package com.sms.ppm.web;
 
 
 import com.sms.ppm.domain.Project;
-import com.sms.ppm.services.MapValidationErrorService;
-import com.sms.ppm.services.ProjectService;
+import com.sms.ppm.services.impl.MapValidationErrorServiceImpl;
+import com.sms.ppm.services.impl.ProjectServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,10 +22,10 @@ import javax.validation.Valid;
 public class ProjectController {
 
     @Autowired
-    private ProjectService projectService;
+    private ProjectServiceImpl projectService;
 
     @Autowired
-    private MapValidationErrorService mapValidationErrorService;
+    private MapValidationErrorServiceImpl mapValidationErrorService;
 
 
     @PostMapping("")

@@ -1,5 +1,6 @@
-package com.sms.ppm.services;
+package com.sms.ppm.services.impl;
 
+import com.sms.ppm.services.MapValidationErrorService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -10,8 +11,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class MapValidationErrorService {
+public class MapValidationErrorServiceImpl implements MapValidationErrorService {
 
+    @Override
     public ResponseEntity<?> mapValidationService(BindingResult result){
 
         if(result.hasErrors()){
@@ -20,7 +22,7 @@ public class MapValidationErrorService {
             for(FieldError error: result.getFieldErrors()){
                 errorMap.put(error.getField(), error.getDefaultMessage());
             }
-            return new ResponseEntity<Map<String, String>>(errorMap, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(errorMap, HttpStatus.BAD_REQUEST);
         }
 
         return null;

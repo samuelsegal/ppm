@@ -1,24 +1,20 @@
 package com.sms.ppm.config;
 
 import com.sms.ppm.domain.Project;
-import com.sms.ppm.services.ProjectService;
+import com.sms.ppm.services.impl.ProjectServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.List;
 
-/*
-Utility to run service tests
- */
 @Slf4j
 @Configuration
-public class Runner {
+public class AppConfig {
 
     @Autowired
-    private ProjectService projectService;
+    private ProjectServiceImpl projectService;
 
     @Bean
     CommandLineRunner run(){
@@ -31,4 +27,5 @@ public class Runner {
             }
         };
     }
+
 }
