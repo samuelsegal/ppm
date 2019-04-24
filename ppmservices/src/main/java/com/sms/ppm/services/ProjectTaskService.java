@@ -7,6 +7,8 @@ public interface ProjectTaskService {
 
     Iterable<ProjectTask> findBacklogById(String id);
 
+    Iterable<ProjectTask> findAllProjectTasks();
+
     ProjectTask findPTByProjectSequence(String backlog_id, String pt_sequence);
 
     ProjectTask updateByProjectSequence(ProjectTask updatedTask, String backlog_id, String pt_sequence);

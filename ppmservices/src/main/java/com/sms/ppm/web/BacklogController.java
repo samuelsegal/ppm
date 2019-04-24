@@ -1,5 +1,6 @@
 package com.sms.ppm.web;
 
+import com.sms.ppm.domain.Project;
 import com.sms.ppm.domain.ProjectTask;
 import com.sms.ppm.services.impl.MapValidationErrorServiceImpl;
 import com.sms.ppm.services.impl.ProjectTaskServiceImpl;
@@ -33,7 +34,11 @@ public class BacklogController {
         return new ResponseEntity<ProjectTask>(projectTask1, HttpStatus.CREATED);
 
     }
-
+    @GetMapping("/all")
+    public Iterable<ProjectTask> getAllProjects(){
+        Iterable<ProjectTask> allProjects = projectTaskService.findAllProjectTasks();
+        return allProjects;
+    }
     @GetMapping("/{backlog_id}")
     public Iterable<ProjectTask> getaProjectBacklog(@PathVariable String backlog_id) {
         return projectTaskService.findBacklogById(backlog_id);

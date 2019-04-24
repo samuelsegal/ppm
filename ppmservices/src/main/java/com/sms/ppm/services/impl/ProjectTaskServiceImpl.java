@@ -34,7 +34,7 @@ public class ProjectTaskServiceImpl implements ProjectTaskService {
             Integer backLogSequence = backlog.getPTSequence();
             backlog.setPTSequence(++backLogSequence);
             projectTask.setProjectSequence(backlog.getProjectIdentifier() + "-" + backLogSequence);
-            projectTask.setProjectIdentifier(backlog.getProjectIdentifier());
+            projectTask.setProjectIdentifier(projectIdentifier);
 
             if (projectTask.getStatus() == null || "".equals(projectTask.getStatus())) {
                 projectTask.setStatus(Status.TODO.toString());
@@ -58,6 +58,11 @@ public class ProjectTaskServiceImpl implements ProjectTaskService {
             throwProjectNotFoundException(id);
         }
         return projectTaskRepository.findByProjectIdentifierOrderByPriority(id);
+    }
+
+    @Override
+    public Iterable<ProjectTask> findAllProjectTasks() {
+        return projectTaskRepository.findAll();
     }
 
     @Override
