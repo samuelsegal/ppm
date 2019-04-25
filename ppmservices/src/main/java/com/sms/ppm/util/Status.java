@@ -1,7 +1,7 @@
 package com.sms.ppm.util;
 
 public enum Status {
-    TODO("TODO"), DONE("DONE"), COMPLETE("COMPLETE");
+    TO_DO("TO_DO"), IN_PROGRESS("IN_PROGRESS"), COMPLETE("COMPLETE");
     private String value;
 
     Status(String value) {

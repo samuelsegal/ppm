@@ -28,11 +28,11 @@ class AddProject extends Component {
 		}
 	}
 
-	onChange(e) {
+	onChange = e => {
 		this.setState({ [e.target.name]: e.target.value });
-	}
+	};
 
-	onSubmit(e) {
+	onSubmit = e => {
 		e.preventDefault();
 		const newProject = {
 			projectName: this.state.projectName,
@@ -42,7 +42,7 @@ class AddProject extends Component {
 			end_date: this.state.end_date,
 		};
 		this.props.createProject(newProject, this.props.history);
-	}
+	};
 
 	render() {
 		const { errors } = this.state;
