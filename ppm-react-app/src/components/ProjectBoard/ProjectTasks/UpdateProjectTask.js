@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
-import { getProjectTask, addProjectTask } from '../../../actions/backlogActions';
+import { getProjectTask, updateProjectTask } from '../../../actions/backlogActions';
 import PropTypes from 'prop-types';
 import { TO_DO, IN_PROGRESS, COMPLETE } from '../../../util/constants';
 class UpdateProjectTask extends Component {
@@ -11,6 +11,7 @@ class UpdateProjectTask extends Component {
 		const { id } = this.props.match.params;
 		this.state = {
 			summary: '',
+			projectSequence: '',
 			acceptanceCriteria: '',
 			status: '',
 			priority: 0,
@@ -26,13 +27,23 @@ class UpdateProjectTask extends Component {
 		const {
 			id,
 			summary,
+			projectSequence,
 			acceptanceCriteria,
 			status,
 			priority,
 			dueDate,
 			projectIdentifier,
 		} = nextProps.project_task;
-		this.setState({ id, summary, acceptanceCriteria, status, priority, dueDate, projectIdentifier });
+		this.setState({
+			id,
+			summary,
+			projectSequence,
+			acceptanceCriteria,
+			status,
+			priority,
+			dueDate,
+			projectIdentifier,
+		});
 	};
 	componentDidMount = () => {
 		const { backlog_id, pt_sequence } = this.props.match.params;
@@ -42,6 +53,7 @@ class UpdateProjectTask extends Component {
 		e.preventDefault();
 		const updateProjectTask = {
 			id: this.state.id,
+			projectSequence: this.state.projectSequence,
 			summary: this.state.summary,
 			acceptanceCriteria: this.state.acceptanceCriteria,
 			status: this.state.status,
@@ -50,7 +62,12 @@ class UpdateProjectTask extends Component {
 			projectIdentifier: this.state.projectIdentifier,
 		};
 
-		this.props.addProjectTask(this.state.projectIdentifier, updateProjectTask, this.props.history);
+		this.props.updateProjectTask(
+			this.state.projectIdentifier,
+			this.state.projectSequence,
+			updateProjectTask,
+			this.props.history
+		);
 	};
 	onChange = e => {
 		this.setState({ [e.target.name]: e.target.value });
@@ -66,7 +83,7 @@ class UpdateProjectTask extends Component {
 							<Link to={`/projectBoard/${backlog_id}`} className="btn btn-light">
 								Back to Project Board
 							</Link>
-							<h4 className="display-4 text-center">Add /Update Project Task</h4>
+							<h4 className="display-4 text-center">Add / Update Project Task</h4>
 							<p className="lead text-center">Project Name + Project Code</p>
 							<form onSubmit={this.onSubmit}>
 								<div className="form-group">
@@ -141,7 +158,7 @@ class UpdateProjectTask extends Component {
 }
 UpdateProjectTask.propTypes = {
 	getProjectTask: PropTypes.func.isRequired,
-	addProjectTask: PropTypes.func.isRequired,
+	updateProjectTask: PropTypes.func.isRequired,
 	errors: PropTypes.object.isRequired,
 };
 const mapStateToProps = state => ({
@@ -150,5 +167,5 @@ const mapStateToProps = state => ({
 });
 export default connect(
 	mapStateToProps,
-	{ getProjectTask, addProjectTask }
+	{ getProjectTask, updateProjectTask }
 )(UpdateProjectTask);

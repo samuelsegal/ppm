@@ -21,7 +21,7 @@ class Backlog extends Component {
 			} else if (status === COMPLETE) {
 				completeTasks.push(tasks[i]);
 			} else {
-				console.log('Invalid task status: ' + status);
+				console.log(`Invalid task status: ${status}`);
 			}
 		}
 		return (
