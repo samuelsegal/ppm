@@ -12,30 +12,35 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sms.ppm.domain.User;
+import com.sms.ppm.domain.PPMUser;
 import com.sms.ppm.services.MapValidationErrorService;
 import com.sms.ppm.services.UserService;
+import com.sms.ppm.validator.UserValidator;
 
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
+	
 	@Autowired
 	private MapValidationErrorService mapValidationService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private UserValidator userValidator;
 	
 	@GetMapping("")
-	Iterable<User> getAllUsers(){
+	Iterable<PPMUser> getAllUsers(){
 		return userService.getAllUsers();
 	}
 	
 	@PostMapping("/register")
-	public ResponseEntity<?> register(@Valid @RequestBody User user, BindingResult result){
+	public ResponseEntity<?> register(@Valid @RequestBody PPMUser pPMUser, BindingResult result){
+		userValidator.validate(pPMUser, result);
 		ResponseEntity<?> errorMap = mapValidationService.mapValidationService(result);
 		if(errorMap != null) {
 			return errorMap;
 		}
-		User newUser = userService.saveUser(user);
-		return new ResponseEntity<User>(newUser, HttpStatus.CREATED);
+		PPMUser newUser = userService.saveUser(pPMUser);
+		return new ResponseEntity<PPMUser>(newUser, HttpStatus.CREATED);
 	}
 }

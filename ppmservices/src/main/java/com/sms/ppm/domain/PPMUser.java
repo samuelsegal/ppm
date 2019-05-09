@@ -23,8 +23,13 @@ import lombok.Data;
 
 @Entity
 @Data
-public class User implements UserDetails{
+public class PPMUser implements UserDetails{
 
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6169749236297040885L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,7 +41,7 @@ public class User implements UserDetails{
 	private String username;
 	
 	@NotBlank(message="Please enter you full name")
-	private String fullName;
+	private String fullname;
 	
 	@NotBlank(message = "Password required")
 	private String password;

@@ -1,8 +1,8 @@
 package com.sms.ppm.services;
 
-import com.sms.ppm.domain.User;
+import com.sms.ppm.domain.PPMUser;
 
 public interface UserService {
-	public User saveUser(User user);
-	Iterable<User> getAllUsers();
+	public PPMUser saveUser(PPMUser pPMUser);
+	Iterable<PPMUser> getAllUsers();
 }

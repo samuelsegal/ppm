@@ -1,18 +1,22 @@
 package com.sms.ppm.config;
 
-import com.fasterxml.jackson.databind.Module;
-import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
-import org.springframework.boot.CommandLineRunner;
+import java.util.List;
+
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConverter;
+import org.springframework.validation.Validator;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import java.util.List;
+import com.fasterxml.jackson.databind.Module;
+import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
 
 @Configuration
 @EnableWebMvc
@@ -36,4 +40,25 @@ public class MvcConfig implements WebMvcConfigurer {
         return new Hibernate5Module();
     }
 
+    @Bean
+    public MessageSource messageSource() {
+        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+        messageSource.setBasename("classpath:messages");
+        messageSource.setDefaultEncoding("UTF-8");
+        return messageSource;
+    }
+
+    @Bean
+    @Override
+    public Validator getValidator() {
+        LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
+        bean.setValidationMessageSource(messageSource());
+        return bean;
+    }   
+    @Bean
+    public LocalValidatorFactoryBean validator(MessageSource messageSource) {
+       LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
+       bean.setValidationMessageSource(messageSource());
+       return bean;
+    }
 }

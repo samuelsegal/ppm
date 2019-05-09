@@ -1,7 +1,12 @@
 package com.sms.ppm.exceptions;
 
 public class ProjectNotFoundException extends RuntimeException{
-    public ProjectNotFoundException(String message){
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public ProjectNotFoundException(String message){
         super(message);
     }
 }

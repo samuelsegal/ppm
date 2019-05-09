@@ -4,7 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.sms.ppm.domain.User;
+import com.sms.ppm.domain.PPMUser;
+import com.sms.ppm.exceptions.UserNameExistsException;
 import com.sms.ppm.repositories.UserRepository;
 import com.sms.ppm.services.UserService;
 
@@ -21,14 +22,19 @@ public class UserServiceImpl implements UserService {
 	private BCryptPasswordEncoder passwordEncoder;
 	
 	@Override
-	public User saveUser(User user) {
-		log.info("Creating new user: " + user);
-		user.setPassword(passwordEncoder.encode(user.getPassword()));
-		return userRepository.save(user);
+	public PPMUser saveUser(PPMUser pPMUser) {
+		log.info("Creating new user: " + pPMUser);
+		pPMUser.setPassword(passwordEncoder.encode(pPMUser.getPassword()));
+		pPMUser.setConfirmPassword("");
+		try{
+			return userRepository.save(pPMUser);
+		}catch (Exception e) {
+			throw new UserNameExistsException("Username '" + pPMUser.getUsername() + "' already exists");
+		}
 	}
 
 	@Override
-	public Iterable<User> getAllUsers() {
+	public Iterable<PPMUser> getAllUsers() {
 		return userRepository.findAll();
 	}
 
