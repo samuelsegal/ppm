@@ -1,18 +1,17 @@
 package com.sms.ppm.services.impl;
 
-import com.sms.ppm.domain.Backlog;
-import com.sms.ppm.domain.Project;
-import com.sms.ppm.exceptions.ProjectIdException;
-import com.sms.ppm.repositories.BacklogRepository;
-import com.sms.ppm.repositories.ProjectRepository;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.sms.ppm.domain.Backlog;
+import com.sms.ppm.domain.Project;
+import com.sms.ppm.exceptions.ProjectIdException;
+import com.sms.ppm.repositories.BacklogRepository;
+import com.sms.ppm.repositories.ProjectRepository;
+
 @Service
-@Slf4j
 public class ProjectServiceImpl implements com.sms.ppm.services.ProjectService {
 
     @Autowired
@@ -27,11 +26,11 @@ public class ProjectServiceImpl implements com.sms.ppm.services.ProjectService {
             project.setProjectIdentifier(identifier);
             if (project.getId() == null) {
                 Backlog backlog = new Backlog();
-                project.setBackLog(backlog);
+                project.setBacklog(backlog);
                 backlog.setProject(project);
                 backlog.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
             } else {
-                project.setBackLog(backlogRepository.findByProjectIdentifier(identifier));
+                project.setBacklog(backlogRepository.findByProjectIdentifier(identifier));
             }
             return projectRepository.save(project);
         } catch (Exception e) {
@@ -59,11 +58,6 @@ public class ProjectServiceImpl implements com.sms.ppm.services.ProjectService {
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true, noRollbackFor = Exception.class)
     public Iterable<Project> findAllProjects() {
         Iterable<Project> allProjects = projectRepository.findAll();
-        if(log.isDebugEnabled()){
-            allProjects.forEach(project -> {
-                log.debug("Found project: {}", project);
-            });
-        }
         return allProjects;
     }
 

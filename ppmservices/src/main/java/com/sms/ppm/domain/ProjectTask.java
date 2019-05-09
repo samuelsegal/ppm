@@ -13,7 +13,7 @@ import java.util.Date;
 @Entity
 @Data
 @ToString(exclude = {"backlog"})
-public class ProjectTask implements Serializable {
+public class ProjectTask {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

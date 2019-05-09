@@ -42,7 +42,7 @@ public class Project {
     @OneToOne(mappedBy = "project", cascade = CascadeType.ALL, fetch=FetchType.LAZY)
     @LazyToOne(LazyToOneOption.NO_PROXY)
     @JsonIgnore
-    private Backlog backLog;
+    private Backlog backlog;
 
     @PrePersist
     protected void onCreate(){
