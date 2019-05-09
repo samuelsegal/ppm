@@ -12,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 @EnableWebSecurity
 @Profile(value = {"dev"})
 @Slf4j
-public class DisabledSecurituyConfig extends WebSecurityConfigurerAdapter {
+public class DisabledSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {

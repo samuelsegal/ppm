@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import com.sms.ppm.domain.PPMUser;
 
 @Repository
-public interface UserRepository extends JpaRepository<PPMUser, Long>{
+public interface PPMUserRepository extends JpaRepository<PPMUser, Long>{
 	PPMUser findByUsername(String username);
+	PPMUser getById(Long id);
 }

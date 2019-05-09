@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.sms.ppm.domain.PPMUser;
 import com.sms.ppm.exceptions.UserNameExistsException;
-import com.sms.ppm.repositories.UserRepository;
+import com.sms.ppm.repositories.PPMUserRepository;
 import com.sms.ppm.services.UserService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 public class UserServiceImpl implements UserService {
 
 	@Autowired
-	private UserRepository userRepository;
+	private PPMUserRepository pPMUserRepository;
 	
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
@@ -27,7 +27,7 @@ public class UserServiceImpl implements UserService {
 		pPMUser.setPassword(passwordEncoder.encode(pPMUser.getPassword()));
 		pPMUser.setConfirmPassword("");
 		try{
-			return userRepository.save(pPMUser);
+			return pPMUserRepository.save(pPMUser);
 		}catch (Exception e) {
 			throw new UserNameExistsException("Username '" + pPMUser.getUsername() + "' already exists");
 		}
@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public Iterable<PPMUser> getAllUsers() {
-		return userRepository.findAll();
+		return pPMUserRepository.findAll();
 	}
 
 }
