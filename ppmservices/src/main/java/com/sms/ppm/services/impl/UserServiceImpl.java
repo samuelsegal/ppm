@@ -38,4 +38,10 @@ public class UserServiceImpl implements UserService {
 		return pPMUserRepository.findAll();
 	}
 
+	@Override
+	public PPMUser getUserByUsername(String username) {
+		return pPMUserRepository.findByUsername(username);
+	}
+
+	
 }

@@ -13,10 +13,19 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.sms.ppm.services.impl.PPMUserDetailsService;
 import com.sms.ppm.util.PPMSecurityConstants;
 
+/**
+ * @author samuelsegal Security configuration. Configure AuthemticationManager
+ *         to use PPMUserDetailsService and BCryptPasswordEncoder. Configure URL
+ *         based security and other security configurations such as CORS, CSRF,
+ *         session management(Stateless for RESTFull API services).
+ *         Add JwtAuthenticationFilter to filter chain
+ *         Enable method level security as well.
+ */
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(
@@ -34,11 +43,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private PPMUserDetailsService ppmUserDetailsService;
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
-	
-	
-	
+
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		//configure authentication manager to use ppmUserDetailService and bcrypt encoder
 		auth.userDetailsService(ppmUserDetailsService).passwordEncoder(bCryptPasswordEncoder);
 	}
 
@@ -46,11 +54,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean(BeanIds.AUTHENTICATION_MANAGER)
 	@Override
 	protected AuthenticationManager authenticationManager() throws Exception {
-		// TODO Auto-generated method stub
+		//Overriding to add @Bean(BeanIds.AUTHENTICATION_MANAGER) to assure our authentication is available to context
 		return super.authenticationManager();
 	}
 
 
+	/**
+	 * @return
+	 * Provide app context with JwtAuthenticationFilter
+	 */
+	@Bean
+	public JwtAuthenticationFilter jwtAuthenticationFilter() {
+		return new JwtAuthenticationFilter();
+	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception{
@@ -64,7 +80,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.authorizeRequests()
 			.antMatchers(PPMSecurityConstants.WEB_RESOURCES_URL).permitAll()
 			.antMatchers(PPMSecurityConstants.SIGN_UP_URL).permitAll()
-			.anyRequest().authenticated();			
+			.anyRequest().authenticated();		
+		http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 	}
 }
 

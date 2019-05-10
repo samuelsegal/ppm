@@ -2,12 +2,16 @@ package com.sms.ppm.domain;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Transient;
@@ -20,11 +24,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
+import lombok.ToString;
 
 @Entity
 @Data
-public class PPMUser implements UserDetails{
-
+@ToString(exclude= {"projects"})
+public class PPMUser implements UserDetails {
 
 	/**
 	 * 
@@ -34,39 +39,42 @@ public class PPMUser implements UserDetails{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Email(message = "Username needs to be a value")
 	@NotBlank(message = "Username is required")
 	@Column(unique = true)
 	private String username;
-	
-	@NotBlank(message="Please enter you full name")
+
+	@NotBlank(message = "Please enter you full name")
 	private String fullname;
-	
+
 	@NotBlank(message = "Password required")
 	private String password;
-	
+
 	@Transient
 	private String confirmPassword;
-	
+
+	@OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER, mappedBy = "ppmuser", orphanRemoval = true)
+	private List<Project> projects;
+
 	private Date created_At;
 	private Date updated_At;
-	
-	//OneToMany with project
-	
-    @PrePersist
-    protected void onCreate(){
-        this.created_At = new Date();
-    }
 
-    @PreUpdate
-    protected void onUpdate(){
-        this.updated_At = new Date();
-    }
+	// OneToMany with project
 
-    /*
-     * UserDetails required interface methods
-     */
+	@PrePersist
+	protected void onCreate() {
+		this.created_At = new Date();
+	}
+
+	@PreUpdate
+	protected void onUpdate() {
+		this.updated_At = new Date();
+	}
+
+	/*
+	 * UserDetails required interface methods
+	 */
 	@Override
 	@JsonIgnore
 	public Collection<? extends GrantedAuthority> getAuthorities() {

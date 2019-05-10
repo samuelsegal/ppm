@@ -52,8 +52,8 @@ public class ProjectTaskServiceImpl implements ProjectTaskService {
     }
 
     @Override
-    public Iterable<ProjectTask> findBacklogById(String id) {
-        Project project = projectRepository.findByProjectIdentifier(id);
+    public Iterable<ProjectTask> findBacklogByIdAndUsername(String id, String username) {
+        Project project = projectRepository.findByProjectIdentifierAndPpmuserUsername(id, username);
         if (project == null) {
             throwProjectNotFoundException(id);
         }

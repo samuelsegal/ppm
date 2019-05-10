@@ -5,7 +5,7 @@ import com.sms.ppm.domain.ProjectTask;
 public interface ProjectTaskService {
     ProjectTask addProjectTask(String projectIdentifier, ProjectTask projectTask);
 
-    Iterable<ProjectTask> findBacklogById(String id);
+    Iterable<ProjectTask> findBacklogByIdAndUsername(String id, String username);
 
     Iterable<ProjectTask> findAllProjectTasks();
 

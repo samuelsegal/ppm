@@ -1,5 +1,7 @@
 package com.sms.ppm.web;
 
+import java.security.Principal;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sms.ppm.domain.ProjectTask;
-import com.sms.ppm.services.impl.MapValidationErrorServiceImpl;
-import com.sms.ppm.services.impl.ProjectTaskServiceImpl;
+import com.sms.ppm.services.MapValidationErrorService;
+import com.sms.ppm.services.ProjectTaskService;
 
 @RestController
 @RequestMapping("/api/backlog")
@@ -26,9 +28,9 @@ import com.sms.ppm.services.impl.ProjectTaskServiceImpl;
 public class BacklogController {
 
     @Autowired
-    private ProjectTaskServiceImpl projectTaskService;
+    private ProjectTaskService projectTaskService;
     @Autowired
-    private MapValidationErrorServiceImpl mapValidationErrorService;
+    private MapValidationErrorService mapValidationErrorService;
 
     @PostMapping("/{backlog_id}")
     public ResponseEntity<?> addProjectTask(@Valid @RequestBody ProjectTask projectTask,
@@ -50,8 +52,8 @@ public class BacklogController {
     }
 
     @GetMapping("/{backlog_id}")
-    public Iterable<ProjectTask> getaProjectBacklog(@PathVariable String backlog_id) {
-        return projectTaskService.findBacklogById(backlog_id);
+    public Iterable<ProjectTask> getaProjectBacklog(@PathVariable String backlog_id, Principal principal) {
+        return projectTaskService.findBacklogByIdAndUsername(backlog_id, principal.getName());
     }
 
     @GetMapping("/{backlog_id}/{pt_sequence}")
