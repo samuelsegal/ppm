@@ -23,7 +23,7 @@ public class JwtAutheticationEntryPoint implements AuthenticationEntryPoint{
 	@Override
 	public void commence(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException authException) throws IOException, ServletException {
-		log.error("Invalid Login Reponse"+request.getRemoteUser());
+		log.error("Invalid Login Response");
 		InvalidLoginResponse invalidLoginResponse = new InvalidLoginResponse();
 		String jsonReponse = new Gson().toJson(invalidLoginResponse);
 		response.setContentType(MediaType.APPLICATION_JSON_VALUE);
