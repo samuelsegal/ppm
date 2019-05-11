@@ -36,7 +36,7 @@ public class ProjectServiceImpl implements com.sms.ppm.services.ProjectService {
                 backlog.setProject(project);
                 backlog.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
             } else {
-                project.setBacklog(backlogRepository.findByProjectIdentifier(identifier));
+                project.setBacklog(backlogRepository.findByProjectIdentifierAndProjectPpmuserUsername(identifier, username));
             }
             return projectRepository.save(project);
         } catch (Exception e) {
