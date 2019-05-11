@@ -9,10 +9,10 @@ export const createProject = (project, history) => async dispatch => {
 			type: GET_ERRORS,
 			payload: {},
 		});
-	} catch (err) {
+	} catch (error) {
 		dispatch({
 			type: GET_ERRORS,
-			payload: err.response.data,
+			payload: error.response.data,
 		});
 	}
 };

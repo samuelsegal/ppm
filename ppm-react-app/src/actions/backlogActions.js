@@ -70,11 +70,11 @@ export const deleteProjectTask = (backlog_id, pt_sequence) => async dispatch => 
 				type: DELETE_PROJECT_TASK,
 				payload: pt_sequence,
 			});
-		} catch (err) {
-			console.log(err);
+		} catch (error) {
+			console.log(error);
 			dispatch({
 				type: GET_ERRORS,
-				payload: err.response.data,
+				payload: error.response.data,
 			});
 		}
 	}
