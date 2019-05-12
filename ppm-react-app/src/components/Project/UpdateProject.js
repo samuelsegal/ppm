@@ -4,6 +4,18 @@ import { getProject, createProject } from '../../actions/projectActions';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
+/*
+Note: For demonstration purposes, this class demonstrates 2 ways for handling input:
+  * 1) Controlled component (https://reactjs.org/docs/forms.html) 
+  * 2) Uncontrolled component (https://reactjs.org/docs/uncontrolled-components.html)
+  * The uncontrolled components are created in constructor
+  * this.projectName = React.createRef();
+  * this.description = React.createRef();
+  * ref atrribute is used instead of value for input element
+  * The controlled component uses combination of onChange(e) and value attribute
+  * Using uncontrolled component changes source of truth to be directly from DOM.
+  * Good article for when to use one or the other - https://goshakkk.name/controlled-vs-uncontrolled-inputs-react/
+*/
 class UpdateProject extends Component {
 	constructor() {
 		super();
@@ -18,6 +30,10 @@ class UpdateProject extends Component {
 		};
 		this.onChange = this.onChange.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
+
+		this.projectName = React.createRef();
+		this.description = React.createRef();
+		console.dir(this.projectName);
 	}
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.errors) {
@@ -25,6 +41,8 @@ class UpdateProject extends Component {
 		}
 		const { id, projectName, projectIdentifier, description, start_date, end_date } = nextProps.project;
 		this.setState({ id, projectName, projectIdentifier, description, start_date, end_date });
+		this.projectName.value = projectName;
+		this.description.current.value = description;
 	}
 	componentDidMount() {
 		const { id } = this.props.match.params;
@@ -39,9 +57,9 @@ class UpdateProject extends Component {
 
 		const updateProject = {
 			id: this.state.id,
-			projectName: this.state.projectName,
+			projectName: this.projectName.value,
 			projectIdentifier: this.state.projectIdentifier,
-			description: this.state.description,
+			description: this.state.desc,
 			start_date: this.state.start_date,
 			end_date: this.state.end_date,
 		};
@@ -63,8 +81,9 @@ class UpdateProject extends Component {
 										type="text"
 										placeholder="Project Name"
 										name="projectName"
-										value={this.state.projectName}
-										onChange={this.onChange}
+										ref={input => (this.projectName = input)}
+										//value={this.state.projectName}
+										//onChange={this.onChange}
 										className={classnames('form-control form-control-lg', {
 											'is-invalid': errors.projectName,
 										})}
@@ -92,8 +111,9 @@ class UpdateProject extends Component {
 									<textarea
 										placeholder="Project Description"
 										name="description"
-										value={this.state.description}
-										onChange={this.onChange}
+										//value={this.state.description}
+										//onChange={this.onChange}
+										ref={this.description}
 										className={classnames('form-control form-control-lg', {
 											'is-invalid': errors.description,
 										})}
