@@ -59,7 +59,7 @@ class UpdateProject extends Component {
 			id: this.state.id,
 			projectName: this.projectName.value,
 			projectIdentifier: this.state.projectIdentifier,
-			description: this.state.desc,
+			description: this.description.current.value,
 			start_date: this.state.start_date,
 			end_date: this.state.end_date,
 		};

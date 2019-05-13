@@ -57,8 +57,9 @@ class Register extends Component {
 										onChange={this.onChange}
 										required
 									/>
+									{errors.fullname && <div className="invalid-feedback">{errors.fullname}</div>}
 								</div>
-								{errors.fullname && <div className="invalid-feedback">{errors.fullname}</div>}
+
 								<div className="form-group">
 									<input
 										type="email"
@@ -70,8 +71,8 @@ class Register extends Component {
 										value={this.state.username}
 										onChange={this.onChange}
 									/>
+									{errors.username && <div className="invalid-feedback">{errors.username}</div>}
 								</div>
-								{errors.username && <div className="invalid-feedback">{errors.username}</div>}
 
 								<div className="form-group">
 									<input
@@ -84,22 +85,24 @@ class Register extends Component {
 										value={this.state.password}
 										onChange={this.onChange}
 									/>
+									{errors.password && <div className="invalid-feedback">{errors.password}</div>}
 								</div>
-								{errors.password && <div className="invalid-feedback">{errors.password}</div>}
 
 								<div className="form-group">
 									<input
 										type="password"
-										className="form-control form-control-lg"
+										className={classnames('form-control form-control-lg', {
+											'is-invalid': errors.confirmPassword,
+										})}
 										placeholder="Confirm Password"
 										name="confirmPassword"
 										value={this.state.confirmPassword}
 										onChange={this.onChange}
 									/>
+									{errors.confirmPassword && (
+										<div className="invalid-feedback">{errors.confirmPassword}</div>
+									)}
 								</div>
-								{errors.confirmPassword && (
-									<div className="invalid-feedback">{errors.confirmPassword}</div>
-								)}
 
 								<input type="submit" className="btn btn-info btn-block mt-4" />
 							</form>
