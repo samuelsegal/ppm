@@ -11,7 +11,7 @@ Note: For demonstration purposes, this class demonstrates 2 ways for handling in
   * The uncontrolled components are created in constructor
   * this.projectName = React.createRef();
   * this.description = React.createRef();
-  * ref atrribute is used instead of value for input element
+  * The ref attribute is used instead of value attribute for input element
   * The controlled component uses combination of onChange(e) and value attribute
   * Using uncontrolled component changes source of truth to be directly from DOM.
   * Good article for when to use one or the other - https://goshakkk.name/controlled-vs-uncontrolled-inputs-react/
