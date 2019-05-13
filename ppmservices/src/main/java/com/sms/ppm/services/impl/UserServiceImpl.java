@@ -15,11 +15,15 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class UserServiceImpl implements UserService {
 
-	@Autowired
 	private PPMUserRepository pPMUserRepository;
+	private BCryptPasswordEncoder passwordEncoder;
 	
 	@Autowired
-	private BCryptPasswordEncoder passwordEncoder;
+	public UserServiceImpl(PPMUserRepository pPMUserRepository, BCryptPasswordEncoder passwordEncoder) {
+		super();
+		this.pPMUserRepository = pPMUserRepository;
+		this.passwordEncoder = passwordEncoder;
+	}	
 	
 	@Override
 	public PPMUser saveUser(PPMUser pPMUser) {
@@ -32,6 +36,7 @@ public class UserServiceImpl implements UserService {
 			throw new UserNameExistsException("Username '" + pPMUser.getUsername() + "' already exists");
 		}
 	}
+
 
 	@Override
 	public Iterable<PPMUser> getAllUsers() {

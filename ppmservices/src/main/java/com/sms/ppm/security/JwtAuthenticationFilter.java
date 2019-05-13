@@ -18,7 +18,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.sms.ppm.domain.PPMUser;
-import com.sms.ppm.services.impl.PPMUserDetailsService;
+import com.sms.ppm.services.impl.PPMUserDetailsServiceImpl;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -34,7 +34,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 	private JWTTokenProvider provider;
 
 	@Autowired
-	private PPMUserDetailsService userDetailsService;
+	private PPMUserDetailsServiceImpl userDetailsService;
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)

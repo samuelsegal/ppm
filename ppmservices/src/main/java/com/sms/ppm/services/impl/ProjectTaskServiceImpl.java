@@ -17,16 +17,21 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class ProjectTaskServiceImpl implements ProjectTaskService {
 
-    @Autowired
+
     private BacklogRepository backlogRepository;
-
-    @Autowired
     private ProjectTaskRepository projectTaskRepository;
-
-    @Autowired
     private ProjectRepository projectRepository;
 
-    @Override
+    @Autowired
+    public ProjectTaskServiceImpl(BacklogRepository backlogRepository, ProjectTaskRepository projectTaskRepository,
+			ProjectRepository projectRepository) {
+		super();
+		this.backlogRepository = backlogRepository;
+		this.projectTaskRepository = projectTaskRepository;
+		this.projectRepository = projectRepository;
+	}
+
+	@Override
     public ProjectTask addProjectTask(String projectIdentifier, ProjectTask projectTask, String username) {
         try {
             Backlog backlog = backlogRepository.findByProjectIdentifierAndProjectPpmuserUsername(projectIdentifier, username);

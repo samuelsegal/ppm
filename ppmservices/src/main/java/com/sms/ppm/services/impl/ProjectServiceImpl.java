@@ -16,13 +16,21 @@ import com.sms.ppm.repositories.ProjectRepository;
 @Service
 public class ProjectServiceImpl implements com.sms.ppm.services.ProjectService {
 
-    @Autowired
     private ProjectRepository projectRepository;
-    @Autowired
     private BacklogRepository backlogRepository;
-    @Autowired
     private PPMUserRepository ppmUserRepository;
-    @Override
+    
+    @Autowired
+    public ProjectServiceImpl(ProjectRepository projectRepository, BacklogRepository backlogRepository,
+			PPMUserRepository ppmUserRepository) {
+		super();
+		this.projectRepository = projectRepository;
+		this.backlogRepository = backlogRepository;
+		this.ppmUserRepository = ppmUserRepository;
+	}
+
+
+	@Override
     public Project saveOrUpdateProject(Project project, String username) {
 
         try {

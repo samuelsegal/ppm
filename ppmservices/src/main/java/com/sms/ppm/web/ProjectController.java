@@ -32,12 +32,15 @@ import lombok.extern.slf4j.Slf4j;
 @CrossOrigin
 public class ProjectController {
 
-	@Autowired
 	private ProjectService projectService;
-
-	@Autowired
 	private MapValidationErrorService mapValidationErrorService;
 	
+	@Autowired
+	public ProjectController(ProjectService projectService, MapValidationErrorService mapValidationErrorService) {
+		super();
+		this.projectService = projectService;
+		this.mapValidationErrorService = mapValidationErrorService;
+	}
 
 	@PostMapping("")
 	public ResponseEntity<?> createNewProject(@Valid @RequestBody Project project, BindingResult result,

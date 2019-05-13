@@ -31,10 +31,16 @@ import com.sms.ppm.services.ProjectTaskService;
 @CrossOrigin
 public class BacklogController {
 
-	@Autowired
 	private ProjectTaskService projectTaskService;
-	@Autowired
 	private MapValidationErrorService mapValidationErrorService;
+
+	@Autowired
+	public BacklogController(ProjectTaskService projectTaskService,
+			MapValidationErrorService mapValidationErrorService) {
+		super();
+		this.projectTaskService = projectTaskService;
+		this.mapValidationErrorService = mapValidationErrorService;
+	}
 
 	@PostMapping("/{backlog_id}")
 	public ResponseEntity<?> addProjectTask(@Valid @RequestBody ProjectTask projectTask, BindingResult result,

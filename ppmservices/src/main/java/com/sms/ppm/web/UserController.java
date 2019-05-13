@@ -30,16 +30,23 @@ import com.sms.ppm.validator.UserValidator;
 @RequestMapping("/api/users")
 public class UserController {
 
-	@Autowired
 	private MapValidationErrorService mapValidationService;
-	@Autowired
 	private UserService userService;
-	@Autowired
 	private UserValidator userValidator;
-	@Autowired
 	private JWTTokenProvider jwtTokenProvider;
-	@Autowired
 	private AuthenticationManager authenticationManager;
+
+	@Autowired
+	public UserController(MapValidationErrorService mapValidationService, UserService userService,
+			UserValidator userValidator, JWTTokenProvider jwtTokenProvider,
+			AuthenticationManager authenticationManager) {
+		super();
+		this.mapValidationService = mapValidationService;
+		this.userService = userService;
+		this.userValidator = userValidator;
+		this.jwtTokenProvider = jwtTokenProvider;
+		this.authenticationManager = authenticationManager;
+	}
 
 	@GetMapping("")
 	Iterable<PPMUser> getAllUsers() {

@@ -15,11 +15,15 @@ import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
-public class PPMUserDetailsService implements UserDetailsService {
+public class PPMUserDetailsServiceImpl implements UserDetailsService {
 
-	@Autowired
 	private PPMUserRepository ppmUserRepository;
 	
+	@Autowired
+	public PPMUserDetailsServiceImpl(PPMUserRepository ppmUserRepository) {
+		super();
+		this.ppmUserRepository = ppmUserRepository;
+	}
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

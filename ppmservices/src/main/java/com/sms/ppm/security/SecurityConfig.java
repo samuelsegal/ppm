@@ -15,12 +15,12 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.sms.ppm.services.impl.PPMUserDetailsService;
+import com.sms.ppm.services.impl.PPMUserDetailsServiceImpl;
 import com.sms.ppm.util.PPMSecurityConstants;
 
 /**
  * @author samuelsegal Security configuration. Configure AuthemticationManager
- *         to use PPMUserDetailsService and BCryptPasswordEncoder. Configure URL
+ *         to use PPMUserDetailsServiceImpl and BCryptPasswordEncoder. Configure URL
  *         based security and other security configurations such as CORS, CSRF,
  *         session management(Stateless for RESTFull API services).
  *         Add JwtAuthenticationFilter to filter chain
@@ -40,7 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private JwtAutheticationEntryPoint jwtAuthenticationEntryPoint;
 	@Autowired
-	private PPMUserDetailsService ppmUserDetailsService;
+	private PPMUserDetailsServiceImpl ppmUserDetailsService;
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
