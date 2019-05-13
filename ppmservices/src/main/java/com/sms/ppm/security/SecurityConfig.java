@@ -33,7 +33,7 @@ import com.sms.ppm.util.PPMSecurityConstants;
 		jsr250Enabled = true,
 		prePostEnabled = true
 		)
-@Profile(value = {"prod"})
+@Profile(value = {"prod", "test"})
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 
@@ -82,6 +82,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers(PPMSecurityConstants.SIGN_UP_URL).permitAll()
 			.anyRequest().authenticated();		
 		http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+		super.configure(http);
 	}
 }
 
