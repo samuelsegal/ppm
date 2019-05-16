@@ -8,7 +8,6 @@ Personal Project Management
 
 This project was built while learning ReactJs / Redux  from an online course @ [AgileIntelligence](https://www.udemy.com/full-stack-project-spring-boot-20-react-redux/). Its sole purpose is to demostrate the use of specified technologies. The end product is a project / task management tool similar to Trello.   
 
-This demonstration project has been deployed to https://sms-ppm.herokuapp.com/  (be patient for the freedom)   
-NOTE: This is a Heroku free tier deployment (may take up to 30 seconds to load on first load due to it being free tier)  
+This demonstration project has been deployed to a FREE tier from heroku which will take 30 seconds to load on first load due to it being a free tier: https://sms-ppm.herokuapp.com/  (be patient for the freedom)   
 
 
