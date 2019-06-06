@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import classnames from 'classnames';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { createNewUser } from '../../actions/securityActions';
 class Register extends Component {
 	constructor() {
@@ -35,6 +35,7 @@ class Register extends Component {
 	onChange = e => {
 		this.setState({ [e.target.name]: e.target.value });
 	};
+
 	render() {
 		const { errors } = this.state;
 		return (
@@ -70,6 +71,7 @@ class Register extends Component {
 										name="username"
 										value={this.state.username}
 										onChange={this.onChange}
+										required
 									/>
 									{errors.username && <div className="invalid-feedback">{errors.username}</div>}
 								</div>
@@ -84,6 +86,7 @@ class Register extends Component {
 										name="password"
 										value={this.state.password}
 										onChange={this.onChange}
+										required
 									/>
 									{errors.password && <div className="invalid-feedback">{errors.password}</div>}
 								</div>
@@ -98,6 +101,7 @@ class Register extends Component {
 										name="confirmPassword"
 										value={this.state.confirmPassword}
 										onChange={this.onChange}
+										required
 									/>
 									{errors.confirmPassword && (
 										<div className="invalid-feedback">{errors.confirmPassword}</div>
